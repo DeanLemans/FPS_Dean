@@ -8,6 +8,7 @@ public class cameraRotation : MonoBehaviour
     private float xMouse;
     private float yMouse;
     private float xRotation;
+    public float speed = 1500f;
 
     void Start()
     {
@@ -16,7 +17,12 @@ public class cameraRotation : MonoBehaviour
 
     void Update()
     {
-        //xMouse = 
-        //yMouse = 
+        xMouse = Input.GetAxis("Mouse X") * speed * Time.deltaTime;
+        yMouse = Input.GetAxis("Mouse Y") * speed * Time.deltaTime;
+
+        xRotation -= yMouse;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        player.Rotate(Vector3.up * xMouse);
     }
 }
