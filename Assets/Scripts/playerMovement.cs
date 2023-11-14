@@ -10,8 +10,11 @@ public class playerMovement : MonoBehaviour
     public float walkingSpeed = 10f;
     public float runningSpeed = 15f;
 
+    public float gravity = -0.5f;
+
     private float moveX;
     private float moveZ;
+    private Vector3 move;
     
     public CharacterController characterController;
     void Start()
@@ -23,5 +26,20 @@ public class playerMovement : MonoBehaviour
     {
         moveX = Input.GetAxis("Horizontal") * currentSpeed * Time.deltaTime;
         moveZ = Input.GetAxis("Vertical") * currentSpeed * Time.deltaTime;
+
+        move = transform.right * moveX +
+                transform.up * gravity +
+                transform.forward * moveZ;
+
+        characterController.Move(move);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            currentSpeed = runningSpeed;
+        }
+        else 
+        {
+            currentSpeed = walkingSpeed;
+        }
     }
 }
