@@ -11,14 +11,18 @@ public class playerMovement : MonoBehaviour
     public float runningSpeed = 15f;
 
     public float gravity = -0.5f;
+    public float jumpSpeed = 0.8f;
+    private float baseLineGravity;
 
     private float moveX;
     private float moveZ;
     private Vector3 move;
     
     public CharacterController characterController;
+    private Rigidbody rb;
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         currentSpeed = walkingSpeed;
     }
 
@@ -41,5 +45,12 @@ public class playerMovement : MonoBehaviour
         {
             currentSpeed = walkingSpeed;
         }
+
+        
+        if (characterController.isGrounded && Input.GetButtonDown("jump"))
+        {
+            rb.AddForce(Vector3.up, ForceMode.Impulse);
+        }
+        
     }
 }
