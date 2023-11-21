@@ -11,7 +11,7 @@ public class playerMovement : MonoBehaviour
     public float runningSpeed = 15f;
 
     public float gravity = -0.5f;
-    public float jumpSpeed = 0.8f;
+    public float jumpSpeed = 1f;
     private float baseLineGravity;
 
     private float moveX;
@@ -19,11 +19,10 @@ public class playerMovement : MonoBehaviour
     private Vector3 move;
     
     public CharacterController characterController;
-    private Rigidbody rb;
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         currentSpeed = walkingSpeed;
+        baseLineGravity = gravity;
     }
 
     void Update()
@@ -46,10 +45,15 @@ public class playerMovement : MonoBehaviour
             currentSpeed = walkingSpeed;
         }
 
-        
-        if (characterController.isGrounded && Input.GetButtonDown("jump"))
+        if (characterController.isGrounded == true && Input.GetKey(KeyCode.Space))
         {
-            rb.AddForce(Vector3.up, ForceMode.Impulse);
+            gravity = baseLineGravity;
+            gravity *= -jumpSpeed;
+        }
+
+        if(gravity > baseLineGravity) 
+        {
+            gravity -= 1.5f * Time.deltaTime;
         }
         
     }
