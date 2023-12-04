@@ -1,60 +1,115 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 
 public class playerMovement : MonoBehaviour
 {
-    //variables
-    private float currentSpeed;
-    
-    public float walkingSpeed = 10f;
-    public float runningSpeed = 15f;
+    #region variables
+    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float walkSpeed = 3f;
+    [SerializeField] private float runSpeed = 5f;
+    [SerializeField] private float crawlSpeed = 1f;
 
-    public float gravity = -0.5f;
-    public float jumpSpeed = 1f;
+    public Vector3 moveDirection;
+    private Vector3 moveDirection2;
+    private Vector3 moveDirectionX;
+    private Vector3 moveDirectionZ;
+    private Vector3 velocity;
+    private float gravity = -30f;
+    private float jumpheight = 2f;
+    private float airSpeed = 0.78f;
+
+    private float jumpAmount;
+    private float jumpTimer = 0.5f;
+
+    private CharacterController characterController;
+
     private float baseLineGravity;
-
-    private float moveX;
-    private float moveZ;
+    private float xMove;
+    private float zMove;
     private Vector3 move;
-    
-    public CharacterController characterController;
+
+    private GameObject Body;
+    private float scaleChange;
+    #endregion
+
     void Start()
     {
-        currentSpeed = walkingSpeed;
-        baseLineGravity = gravity;
+        characterController = GetComponent<CharacterController>(); //Gets CharacterController
     }
 
     void Update()
     {
-        moveX = Input.GetAxis("Horizontal") * currentSpeed * Time.deltaTime;
-        moveZ = Input.GetAxis("Vertical") * currentSpeed * Time.deltaTime;
+        Move(); //Can Move
+        jumpTimer += Time.deltaTime; //JumpTimer is = Time.DeltaTime
+    }
 
-        move = transform.right * moveX +
-                transform.up * gravity +
-                transform.forward * moveZ;
-
-        characterController.Move(move);
-
-        if (Input.GetKey(KeyCode.LeftShift))
+    private void Move()
+    {
+        if (characterController.isGrounded && velocity.y < 0)
         {
-            currentSpeed = runningSpeed;
+            velocity.y = -2f;
         }
-        else 
+        float MoveZ = Input.GetAxis("Vertical"); //Input MoveDirection Axis Z
+        float MoveX = Input.GetAxis("Horizontal"); //Input MoveDirection Axis X
+
+        moveDirectionZ = new Vector3(0, 0, MoveZ); //Axis Instellen In Vector3
+        moveDirectionX = new Vector3(MoveX, 0, 0); //Axis Instellen In Vector3
+        moveDirection = transform.TransformDirection(moveDirectionX + moveDirectionZ); //Transforms Move Directions
+
+        if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift)) Walk(); //Walk If "LeftShift" Is Not Pressed
+        else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift)) Run();//Run If "LeftShift" Is Pressed
+
+        if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftControl)) Walk(); //Walk If "LeftControl" Is Not Pressed
+        else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftControl)) //Crawl If "LeftControl" Is Pressed
         {
-            currentSpeed = walkingSpeed;
+            Crawl();
         }
 
-        if (characterController.isGrounded == true && Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && jumpTimer >= 0.5 && jumpAmount > 0) //Double Jump Part Of The Script
         {
-            gravity = baseLineGravity;
-            gravity *= -jumpSpeed;
+            Jump();
+            jumpAmount -= 1;
+            jumpTimer = 0f;
         }
 
-        if(gravity > baseLineGravity) 
+        if (characterController.isGrounded) //When Player Is Within StepOffset = Character Is Grounded
         {
-            gravity -= 1.5f * Time.deltaTime;
+            if (moveDirection != Vector3.zero)//Idle
+            {
+                Idle();
+            }
+            jumpAmount = 1; //Resets The Amount Of Possible Jumps 
         }
-        
+        else
+        {
+            moveDirection *= airSpeed;
+        }
+        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+
+        velocity.y += gravity * Time.deltaTime; // applies gravity
+        characterController.Move(velocity * Time.deltaTime);
+    }
+    private void Walk() //The Walk Script
+    {
+        moveDirection *= walkSpeed;
+    }
+    private void Run() //The Run Script
+    {
+        moveDirection *= runSpeed;
+    }
+    private void Jump() //The Jump Script
+    {
+        velocity.y = Mathf.Sqrt(jumpheight * -2 * gravity);
+    }
+    private void Idle() //The Idle Script
+    {
+
+    }
+    private void Crawl() //The Crawl Script
+    {
+        moveDirection *= crawlSpeed;
     }
 }
