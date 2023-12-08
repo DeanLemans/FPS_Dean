@@ -10,10 +10,8 @@ public class playerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float walkSpeed = 3f;
     [SerializeField] private float runSpeed = 5f;
-    [SerializeField] private float crawlSpeed = 1f;
 
     public Vector3 moveDirection;
-    private Vector3 moveDirection2;
     private Vector3 moveDirectionX;
     private Vector3 moveDirectionZ;
     private Vector3 velocity;
@@ -24,15 +22,7 @@ public class playerMovement : MonoBehaviour
     private float jumpAmount;
     private float jumpTimer = 0.5f;
 
-    private CharacterController characterController;
-
-    private float baseLineGravity;
-    private float xMove;
-    private float zMove;
-    private Vector3 move;
-
-    private GameObject Body;
-    private float scaleChange;
+    public CharacterController characterController;
     #endregion
 
     void Start()
@@ -52,21 +42,17 @@ public class playerMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
-        float MoveZ = Input.GetAxis("Vertical"); //Input MoveDirection Axis Z
-        float MoveX = Input.GetAxis("Horizontal"); //Input MoveDirection Axis X
+        float zMove = Input.GetAxis("Vertical"); //Input MoveDirection Axis Z
+        float xMove = Input.GetAxis("Horizontal"); //Input MoveDirection Axis X
 
-        moveDirectionZ = new Vector3(0, 0, MoveZ); //Axis Instellen In Vector3
-        moveDirectionX = new Vector3(MoveX, 0, 0); //Axis Instellen In Vector3
+        moveDirectionZ = new Vector3(0, 0, zMove); //Axis Instellen In Vector3
+        moveDirectionX = new Vector3(xMove, 0, 0); //Axis Instellen In Vector3
         moveDirection = transform.TransformDirection(moveDirectionX + moveDirectionZ); //Transforms Move Directions
 
         if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftShift)) Walk(); //Walk If "LeftShift" Is Not Pressed
         else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftShift)) Run();//Run If "LeftShift" Is Pressed
 
         if (moveDirection != Vector3.zero && !Input.GetKey(KeyCode.LeftControl)) Walk(); //Walk If "LeftControl" Is Not Pressed
-        else if (moveDirection != Vector3.zero && Input.GetKey(KeyCode.LeftControl)) //Crawl If "LeftControl" Is Pressed
-        {
-            Crawl();
-        }
 
         if (Input.GetKey(KeyCode.Space) && jumpTimer >= 0.5 && jumpAmount > 0) //Double Jump Part Of The Script
         {
@@ -77,10 +63,6 @@ public class playerMovement : MonoBehaviour
 
         if (characterController.isGrounded) //When Player Is Within StepOffset = Character Is Grounded
         {
-            if (moveDirection != Vector3.zero)//Idle
-            {
-                Idle();
-            }
             jumpAmount = 1; //Resets The Amount Of Possible Jumps 
         }
         else
@@ -104,12 +86,6 @@ public class playerMovement : MonoBehaviour
     {
         velocity.y = Mathf.Sqrt(jumpheight * -2 * gravity);
     }
-    private void Idle() //The Idle Script
-    {
-
-    }
-    private void Crawl() //The Crawl Script
-    {
-        moveDirection *= crawlSpeed;
-    }
+   
+  
 }

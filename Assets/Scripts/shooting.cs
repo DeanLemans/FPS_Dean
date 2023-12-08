@@ -18,12 +18,11 @@ public class shooting : MonoBehaviour
             {
                 if (hit.collider.tag.Equals("NPC")) 
                 {
-                    Debug.Log("FUCK YOU");
                     Destroy(hit.collider.gameObject);
                 }
                 else 
                 {
-                    Debug.Log("stupid ass, fuck off");
+                    Debug.Log("not npc");
                 }
             }
         }

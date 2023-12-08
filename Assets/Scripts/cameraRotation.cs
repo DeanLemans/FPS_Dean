@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class cameraRotation : MonoBehaviour
 {
+    
     public Transform player;
     private float xMouse;
     private float yMouse;
-    private float xRotation;
+    private float xRotation; 
+    private float yRotation;
     public float speed = 1500f;
 
     void Start()
@@ -25,4 +28,5 @@ public class cameraRotation : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         player.Rotate(Vector3.up * xMouse);
     }
+    
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class enemySpawner : MonoBehaviour
 {
+    [Header("Spawner of da enemy's")]
     public GameObject enemyPrefab;
     public int enemyAmount;
     void Start()
