@@ -1981,9 +1981,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efe365aee7fdfb94c9a55eb3bfb16ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSwayAmount: 0.1
-  jumpSwayAmount: 0.2
-  smooth: 8
+  smooth: 10
+  multiplier: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

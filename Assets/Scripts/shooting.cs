@@ -22,7 +22,7 @@ public class shooting : MonoBehaviour
                 }
                 else 
                 {
-                    Debug.Log("not npc");
+                    
                 }
             }
         }

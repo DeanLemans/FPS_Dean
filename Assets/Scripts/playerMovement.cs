@@ -86,6 +86,4 @@ public class playerMovement : MonoBehaviour
     {
         velocity.y = Mathf.Sqrt(jumpheight * -2 * gravity);
     }
-   
-  
 }
