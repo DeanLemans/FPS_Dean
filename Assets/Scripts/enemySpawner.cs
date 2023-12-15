@@ -6,6 +6,8 @@ public class enemySpawner : MonoBehaviour
 {
     [Header("Spawner of da enemy's")]
     public GameObject enemyPrefab;
+    public GameObject enemy1;
+    public GameObject enemy2;
     public int enemyAmount;
     void Start()
     {

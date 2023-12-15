@@ -11,13 +11,5 @@ public class menuGo : MonoBehaviour
         {
             SceneManager.LoadScene("playerControl");
         }
-        else if (Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Keypad2))
-        {
-            Application.Quit();
-        }
-        else if (Input.GetKey(KeyCode.Alpha3) || Input.GetKey(KeyCode.Keypad3))
-        {
-            SceneManager.LoadScene("Mystery");
-        }
     }
 }

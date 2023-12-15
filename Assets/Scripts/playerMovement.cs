@@ -23,6 +23,10 @@ public class playerMovement : MonoBehaviour
     private float jumpAmount;
     private float jumpTimer = 0.5f;
 
+    public GameObject enemy1;
+    public GameObject enemy2;
+    public string win;
+
     public CharacterController characterController;
     #endregion
 
@@ -36,15 +40,26 @@ public class playerMovement : MonoBehaviour
         Move(); //Can Move
         jumpTimer += Time.deltaTime; //JumpTimer is = Time.DeltaTime
 
-        //if (Input.GetKey(KeyCode.Escape))
-        //{
-        //    SceneManager.LoadScene("home");
-        //}
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("home");
+        }
 
     }
 
     private void Move()
     {
+        // Count all game objects with the "NPC" tag
+        GameObject[] npcs = GameObject.FindGameObjectsWithTag("NPC");
+        int npcCount = npcs.Length;
+
+        // Check if the NPC count is zero
+        if (npcCount == 0)
+        {
+            // Load the win scene
+            SceneManager.LoadScene("win");
+        }
+
         if (characterController.isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
@@ -94,5 +109,6 @@ public class playerMovement : MonoBehaviour
         velocity.y = Mathf.Sqrt(jumpheight * -2 * gravity);
     }
 
+  
 
 }
