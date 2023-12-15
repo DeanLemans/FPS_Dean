@@ -203,6 +203,9 @@ MonoBehaviour:
   walkSpeed: 3
   runSpeed: 5
   moveDirection: {x: 0, y: 0, z: 0}
+  enemy1: {fileID: 0}
+  enemy2: {fileID: 0}
+  win: 
   characterController: {fileID: 0}
 --- !u!136 &20119362
 CapsuleCollider:
@@ -2042,6 +2045,10 @@ PrefabInstance:
     - target: {fileID: 5554371354293837, guid: 3e7149e1d028153418e52e4386fd5cab, type: 3}
       propertyPath: m_Name
       value: healthCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 1617398783570583628, guid: 3e7149e1d028153418e52e4386fd5cab, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2505381642816381776, guid: 3e7149e1d028153418e52e4386fd5cab, type: 3}
       propertyPath: m_LocalPosition.x
