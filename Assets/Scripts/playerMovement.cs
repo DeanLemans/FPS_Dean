@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour
 {
@@ -34,6 +35,12 @@ public class playerMovement : MonoBehaviour
     {
         Move(); //Can Move
         jumpTimer += Time.deltaTime; //JumpTimer is = Time.DeltaTime
+
+        //if (Input.GetKey(KeyCode.Escape))
+        //{
+        //    SceneManager.LoadScene("home");
+        //}
+
     }
 
     private void Move()
@@ -86,4 +93,6 @@ public class playerMovement : MonoBehaviour
     {
         velocity.y = Mathf.Sqrt(jumpheight * -2 * gravity);
     }
+
+
 }

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class enemyMovement : MonoBehaviour
 {
+
     public NavMeshAgent agent;
     public float squareOffMovement = 50f;
     private float xMin;
@@ -16,6 +17,14 @@ public class enemyMovement : MonoBehaviour
     private float zPosistion;
     private float yPosistion;
     public float closeEnough = 2f;
+
+    private Health health;
+
+    private void Awake()
+    {
+        health = GameObject.Find("Player").GetComponent<Health>();  
+    }
+
     void Start()
     {
         xMax = -squareOffMovement;
@@ -41,5 +50,13 @@ public class enemyMovement : MonoBehaviour
         zPosistion = Random.Range(zMin, zMax);
 
         agent.SetDestination(new Vector3(xPosistion, yPosistion, zPosistion));
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            health.takeDamage(1);
+        }
     }
 }
