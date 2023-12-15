@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'your goal is to kill al enemy
+  m_text: 'your goal is to kill all enemy
 
 
     press 1 too play game/restart game
