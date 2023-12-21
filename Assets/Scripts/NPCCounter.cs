@@ -5,6 +5,11 @@ public class NPCCounter : MonoBehaviour
 {
     public TextMeshProUGUI npcCountText;
 
+    private void Start()
+    {
+        UpdateNPCCount();
+    }
+
     void Awake()
     {
         if (npcCountText == null)
