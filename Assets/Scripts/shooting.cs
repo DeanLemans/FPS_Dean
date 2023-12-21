@@ -6,46 +6,35 @@ using UnityEngine;
 public class shooting : MonoBehaviour
 {
     public Camera cam;
+    public NPCCounter npcCounter; // Reference to the NPCCounter script
 
-    private Ray ray;
-    private RaycastHit hit;
-
-    public TextMeshProUGUI npcCountText; // Assign this in the inspector
-    private int npcCount = 0;
-
-    private void Start()
+    void Start()
     {
-        UpdateNPCCountText();
-    }
-
-    public void IncrementNPCCount()
-    {
-        npcCount++;
-        UpdateNPCCountText();
-    }
-
-    private void UpdateNPCCountText()
-    {
-        if (npcCountText != null)
+        // Ensure there's a reference to the NPCCounter component
+        if (npcCounter == null)
         {
-            npcCountText.text = npcCount.ToString();
+            Debug.LogError("NPCCounter component not assigned to shooting script!");
         }
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(0)) 
+        if (Input.GetMouseButton(0))
         {
-            ray = cam.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out hit)) 
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.tag.Equals("NPC")) 
+                if (hit.collider.CompareTag("NPC"))
                 {
                     Destroy(hit.collider.gameObject);
-                }
-                else 
-                {
-                    
+
+                    // Update NPC count after destruction
+                    if (npcCounter != null)
+                    {
+                        npcCounter.UpdateNPCCount();
+                    }
                 }
             }
         }

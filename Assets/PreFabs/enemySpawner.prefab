@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6781843961389741191, guid: 0f6631f50114d5b4a8e4af554aff6368, type: 3}
+  enemy1: {fileID: 0}
+  enemy2: {fileID: 0}
   enemyAmount: 1
 --- !u!114 &3027533789897317454
 MonoBehaviour:
@@ -60,4 +62,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 2184035730814608796, guid: 24f9ba8659141cf40bdcfdde5841bdf8, type: 3}
+  enemy1: {fileID: 0}
+  enemy2: {fileID: 0}
   enemyAmount: 1

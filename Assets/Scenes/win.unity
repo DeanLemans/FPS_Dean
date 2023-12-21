@@ -289,9 +289,13 @@ MonoBehaviour:
   m_text: 'you won
 
 
+    you killed: 10 enemy
+
+
     press 1 too restart
 
-    press 2 too go to begin menu
+    press
+    2 too go to begin menu
 
 '
   m_isRightToLeft: 0

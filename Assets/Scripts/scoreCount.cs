@@ -1,21 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class scoreCount : MonoBehaviour
 {
-    private void OnDestroy()
+    // Reference to the TextMeshPro text component
+    public TextMeshProUGUI npcCountText;
+
+    void Start()
     {
-        // Find the NPCManager instance in the scene and increment the NPC count
-        shooting shooting = FindObjectOfType<shooting>();
-
-
-        if (shooting != null && gameObject.CompareTag("NPC"))
+        // Check if TextMeshProUGUI component is assigned
+        if (npcCountText == null)
         {
-            shooting.IncrementNPCCount();
+            Debug.LogError("TextMeshProUGUI not assigned to NPCCounter script!");
+            return;
         }
 
-        int value = 100;
-        Debug.Log($"Value: {value}");
+        // Get the count of objects with the tag "NPC"
+        int npcCount = GameObject.FindGameObjectsWithTag("NPC").Length;
+
+        // Display the count in the TextMeshPro text component
+        npcCountText.text = "NPC Count: " + npcCount;
     }
 }
+
+
+
+
+
+
